@@ -127,7 +127,7 @@
     ;; Protocol activation verification
     (asserts! (var-get protocol-activation-status) vault-status-authorization-required)
     (asserts! (not (var-get system-maintenance-mode)) vault-status-authorization-required)
-
+    
     ;; Comprehensive input validation sequence
     (asserts! (assess-descriptor-validity content-identifier) vault-status-descriptor-invalid)
     (asserts! (confirm-capacity-bounds storage-requirement) vault-status-capacity-exceeded)
@@ -155,7 +155,7 @@
 
     ;; Registry sequence advancement
     (var-set asset-registry-sequence next-asset-uid)
-
+    
     ;; Return successful registration confirmation
     (ok {
       registered-uid: next-asset-uid,
@@ -198,7 +198,7 @@
         classification-markers: refreshed-markers 
       })
     )
-
+    
     (ok {
       updated-asset: target-uid,
       modification-block: modification-timestamp
@@ -225,7 +225,7 @@
       { asset-uid: target-asset, authorized-entity: beneficiary-principal }
       { access-level-granted: true }
     )
-
+    
     (ok {
       authorized-asset: target-asset,
       granted-to: beneficiary-principal,
@@ -248,7 +248,7 @@
 
     ;; Access privilege removal
     (map-delete access-privilege-matrix { asset-uid: target-asset, authorized-entity: subject-principal })
-
+    
     (ok {
       revoked-asset: target-asset,
       revoked-from: subject-principal,
@@ -274,13 +274,13 @@
       { asset-uid: target-asset }
       (merge asset-metadata { vault-custodian: successor-custodian })
     )
-
+    
     ;; Transfer successor access establishment
     (map-set access-privilege-matrix
       { asset-uid: target-asset, authorized-entity: successor-custodian }
       { access-level-granted: true }
     )
-
+    
     (ok {
       transferred-asset: target-asset,
       previous-custodian: tx-sender,
@@ -305,7 +305,7 @@
 
     ;; Complete asset data purging
     (map-delete asset-inventory-vault { asset-uid: target-asset })
-
+    
     (ok {
       destroyed-asset: target-asset,
       destruction-block: destruction-timestamp
@@ -334,7 +334,7 @@
       { asset-uid: target-asset }
       (merge asset-metadata { classification-markers: enhanced-markers })
     )
-
+    
     (ok {
       enhanced-asset: target-asset,
       total-markers: (len enhanced-markers),
@@ -362,7 +362,7 @@
       { asset-uid: target-asset }
       (merge asset-metadata { classification-markers: archived-markers })
     )
-
+    
     (ok {
       archived-asset: target-asset,
       archival-block: archival-timestamp
@@ -478,7 +478,7 @@
       { asset-uid: target-asset }
       (merge asset-metadata { classification-markers: restricted-markers })
     )
-
+    
     (ok {
       restricted-asset: target-asset,
       restriction-block: restriction-timestamp
